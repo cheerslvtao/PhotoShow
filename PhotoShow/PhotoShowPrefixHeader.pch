@@ -1,0 +1,17 @@
+//
+//  PhotoShowPrefixHeader.pch
+//  PhotoShow
+//
+//  Created by SFC-a on 2017/7/13.
+//  Copyright © 2017年 lvtao. All rights reserved.
+//
+
+#ifndef PhotoShowPrefixHeader_pch
+#define PhotoShowPrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#import "Globleconst.h"
+
+#endif /* PhotoShowPrefixHeader_pch */

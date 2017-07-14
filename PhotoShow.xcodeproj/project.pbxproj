@@ -13,9 +13,20 @@
 		3520E73E1F17007D0087EEF8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3520E73C1F17007D0087EEF8 /* Main.storyboard */; };
 		3520E7401F17007D0087EEF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3520E73F1F17007D0087EEF8 /* Assets.xcassets */; };
 		3520E7431F17007D0087EEF8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3520E7411F17007D0087EEF8 /* LaunchScreen.storyboard */; };
+		3520E7521F1701080087EEF8 /* Globleconst.m in Sources */ = {isa = PBXBuildFile; fileRef = 3520E74C1F1701080087EEF8 /* Globleconst.m */; };
+		3520E7561F17012A0087EEF8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3520E7551F17012A0087EEF8 /* SystemConfiguration.framework */; };
+		3520E7581F1701310087EEF8 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3520E7571F1701310087EEF8 /* libz.tbd */; };
+		3520E75A1F17013C0087EEF8 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3520E7591F17013C0087EEF8 /* libsqlite3.0.tbd */; };
+		3520E75C1F1701440087EEF8 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3520E75B1F1701440087EEF8 /* libc++.tbd */; };
+		3520E75E1F17014B0087EEF8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3520E75D1F17014B0087EEF8 /* Security.framework */; };
+		3520E7601F1701500087EEF8 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3520E75F1F1701500087EEF8 /* CoreTelephony.framework */; };
+		3520E7621F1701560087EEF8 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3520E7611F1701560087EEF8 /* CFNetwork.framework */; };
+		3520E7661F17102E0087EEF8 /* UMManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3520E7651F17102E0087EEF8 /* UMManager.m */; };
+		761DCDEE3A1A052AA0D755CD /* libPods-PhotoShow.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F54FE7E1EF460F379F7177A /* libPods-PhotoShow.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1DCCFAEE9F65B01828EE0161 /* Pods-PhotoShow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoShow.release.xcconfig"; path = "Pods/Target Support Files/Pods-PhotoShow/Pods-PhotoShow.release.xcconfig"; sourceTree = "<group>"; };
 		3520E7301F17007D0087EEF8 /* PhotoShow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoShow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3520E7341F17007D0087EEF8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3520E7361F17007D0087EEF8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -26,6 +37,21 @@
 		3520E73F1F17007D0087EEF8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3520E7421F17007D0087EEF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3520E7441F17007D0087EEF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3520E74B1F1701080087EEF8 /* Globleconst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Globleconst.h; sourceTree = "<group>"; };
+		3520E74C1F1701080087EEF8 /* Globleconst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Globleconst.m; sourceTree = "<group>"; };
+		3520E7551F17012A0087EEF8 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		3520E7571F1701310087EEF8 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		3520E7591F17013C0087EEF8 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		3520E75B1F1701440087EEF8 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		3520E75D1F17014B0087EEF8 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		3520E75F1F1701500087EEF8 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		3520E7611F1701560087EEF8 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		3520E7631F1701780087EEF8 /* PhotoShowPrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoShowPrefixHeader.pch; sourceTree = "<group>"; };
+		3520E7641F17102E0087EEF8 /* UMManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMManager.h; sourceTree = "<group>"; };
+		3520E7651F17102E0087EEF8 /* UMManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMManager.m; sourceTree = "<group>"; };
+		5F54FE7E1EF460F379F7177A /* libPods-PhotoShow.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PhotoShow.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC0C40F15F7D6B3E28A839E2 /* Pods-PhotoShow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoShow.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhotoShow/Pods-PhotoShow.debug.xcconfig"; sourceTree = "<group>"; };
+		D44A60AB9CAD1BE5A463C2A1 /* Pods-PhotoShow.testdebug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoShow.testdebug.xcconfig"; path = "Pods/Target Support Files/Pods-PhotoShow/Pods-PhotoShow.testdebug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,17 +59,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3520E7621F1701560087EEF8 /* CFNetwork.framework in Frameworks */,
+				3520E7601F1701500087EEF8 /* CoreTelephony.framework in Frameworks */,
+				3520E75E1F17014B0087EEF8 /* Security.framework in Frameworks */,
+				3520E75C1F1701440087EEF8 /* libc++.tbd in Frameworks */,
+				3520E75A1F17013C0087EEF8 /* libsqlite3.0.tbd in Frameworks */,
+				3520E7581F1701310087EEF8 /* libz.tbd in Frameworks */,
+				3520E7561F17012A0087EEF8 /* SystemConfiguration.framework in Frameworks */,
+				761DCDEE3A1A052AA0D755CD /* libPods-PhotoShow.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2E99AE5976CCDAD8CB14423C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BC0C40F15F7D6B3E28A839E2 /* Pods-PhotoShow.debug.xcconfig */,
+				1DCCFAEE9F65B01828EE0161 /* Pods-PhotoShow.release.xcconfig */,
+				D44A60AB9CAD1BE5A463C2A1 /* Pods-PhotoShow.testdebug.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		3520E7271F17007D0087EEF8 = {
 			isa = PBXGroup;
 			children = (
 				3520E7321F17007D0087EEF8 /* PhotoShow */,
 				3520E7311F17007D0087EEF8 /* Products */,
+				3520E7541F17012A0087EEF8 /* Frameworks */,
+				2E99AE5976CCDAD8CB14423C /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,10 +104,12 @@
 		3520E7321F17007D0087EEF8 /* PhotoShow */ = {
 			isa = PBXGroup;
 			children = (
+				3520E74A1F1701080087EEF8 /* Tools */,
 				3520E7361F17007D0087EEF8 /* AppDelegate.h */,
 				3520E7371F17007D0087EEF8 /* AppDelegate.m */,
 				3520E7391F17007D0087EEF8 /* ViewController.h */,
 				3520E73A1F17007D0087EEF8 /* ViewController.m */,
+				3520E7631F1701780087EEF8 /* PhotoShowPrefixHeader.pch */,
 				3520E73C1F17007D0087EEF8 /* Main.storyboard */,
 				3520E73F1F17007D0087EEF8 /* Assets.xcassets */,
 				3520E7411F17007D0087EEF8 /* LaunchScreen.storyboard */,
@@ -79,6 +127,32 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		3520E74A1F1701080087EEF8 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				3520E74B1F1701080087EEF8 /* Globleconst.h */,
+				3520E74C1F1701080087EEF8 /* Globleconst.m */,
+				3520E7641F17102E0087EEF8 /* UMManager.h */,
+				3520E7651F17102E0087EEF8 /* UMManager.m */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		3520E7541F17012A0087EEF8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3520E7611F1701560087EEF8 /* CFNetwork.framework */,
+				3520E75F1F1701500087EEF8 /* CoreTelephony.framework */,
+				3520E75D1F17014B0087EEF8 /* Security.framework */,
+				3520E75B1F1701440087EEF8 /* libc++.tbd */,
+				3520E7591F17013C0087EEF8 /* libsqlite3.0.tbd */,
+				3520E7571F1701310087EEF8 /* libz.tbd */,
+				3520E7551F17012A0087EEF8 /* SystemConfiguration.framework */,
+				5F54FE7E1EF460F379F7177A /* libPods-PhotoShow.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -86,9 +160,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3520E7471F17007D0087EEF8 /* Build configuration list for PBXNativeTarget "PhotoShow" */;
 			buildPhases = (
+				2D1E368B98CB792A5D9E2533 /* [CP] Check Pods Manifest.lock */,
 				3520E72C1F17007D0087EEF8 /* Sources */,
 				3520E72D1F17007D0087EEF8 /* Frameworks */,
 				3520E72E1F17007D0087EEF8 /* Resources */,
+				7C351F44BE4CE45AE7602F85 /* [CP] Embed Pods Frameworks */,
+				DA860DB04B767C71FAF0EA97 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -146,11 +223,61 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2D1E368B98CB792A5D9E2533 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		7C351F44BE4CE45AE7602F85 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PhotoShow/Pods-PhotoShow-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DA860DB04B767C71FAF0EA97 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PhotoShow/Pods-PhotoShow-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		3520E72C1F17007D0087EEF8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3520E7521F1701080087EEF8 /* Globleconst.m in Sources */,
+				3520E7661F17102E0087EEF8 /* UMManager.m in Sources */,
 				3520E73B1F17007D0087EEF8 /* ViewController.m in Sources */,
 				3520E7381F17007D0087EEF8 /* AppDelegate.m in Sources */,
 				3520E7351F17007D0087EEF8 /* main.m in Sources */,
@@ -203,6 +330,8 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				CustomAppBundleld = com.xzcy.PhotoShowDebug;
+				CustomProductName = "相册debug";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -251,6 +380,8 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				CustomAppBundleld = com.xzcy.PhotoShow;
+				CustomProductName = "相册正式版";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -271,11 +402,19 @@
 		};
 		3520E7481F17007D0087EEF8 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BC0C40F15F7D6B3E28A839E2 /* Pods-PhotoShow.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = MYEGCHS9F7;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/PhotoShow/PhotoShowPrefixHeader.pch";
 				INFOPLIST_FILE = PhotoShow/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PhotoShow/wxPayLibrary",
+				);
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xzcy.PhotoShow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -283,15 +422,93 @@
 		};
 		3520E7491F17007D0087EEF8 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1DCCFAEE9F65B01828EE0161 /* Pods-PhotoShow.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = MYEGCHS9F7;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/PhotoShow/PhotoShowPrefixHeader.pch";
 				INFOPLIST_FILE = PhotoShow/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PhotoShow/wxPayLibrary",
+				);
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xzcy.PhotoShow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
+		};
+		3520E76A1F17259B0087EEF8 /* TestDebug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CustomAppBundleld = com.xzcy.PhotoShowTest;
+				CustomProductName = "相册测试";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = TestDebug;
+		};
+		3520E76B1F17259B0087EEF8 /* TestDebug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D44A60AB9CAD1BE5A463C2A1 /* Pods-PhotoShow.testdebug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = MYEGCHS9F7;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/PhotoShow/PhotoShowPrefixHeader.pch";
+				INFOPLIST_FILE = PhotoShow/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PhotoShow/wxPayLibrary",
+				);
+				OTHER_LDFLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.xzcy.PhotoShow;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = TestDebug;
 		};
 /* End XCBuildConfiguration section */
 
@@ -300,6 +517,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3520E7451F17007D0087EEF8 /* Debug */,
+				3520E76A1F17259B0087EEF8 /* TestDebug */,
 				3520E7461F17007D0087EEF8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -309,9 +527,11 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3520E7481F17007D0087EEF8 /* Debug */,
+				3520E76B1F17259B0087EEF8 /* TestDebug */,
 				3520E7491F17007D0087EEF8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
