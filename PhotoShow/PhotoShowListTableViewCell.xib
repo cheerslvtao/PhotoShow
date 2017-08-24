@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16A313a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="80" id="KGk-i7-Jjw" customClass="PhotoShowListTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="79.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2017-02-19至2017-12-12" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="StF-Gu-HTX">
+                        <rect key="frame" x="106" y="42" width="153.5" height="19.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="StF-Gu-HTX" secondAttribute="height" multiplier="164:21" id="w7s-W6-bFh"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="Q2k-2Z-KGo">
+                        <rect key="frame" x="282" y="25.5" width="30" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="30" id="MuX-he-a8F"/>
+                            <constraint firstAttribute="width" secondItem="Q2k-2Z-KGo" secondAttribute="height" multiplier="1:1" id="v8z-p4-grU"/>
+                        </constraints>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="108" translatesAutoresizingMaskIntoConstraints="NO" id="DOF-mi-FzQ">
+                        <rect key="frame" x="15" y="15" width="79" height="49.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="DOF-mi-FzQ" secondAttribute="height" multiplier="240:150" id="8ws-h4-fFu"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="相册名称相册名称相册名称相册名称相册名称" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UxV-CX-w89">
+                        <rect key="frame" x="106" y="20" width="174" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="StF-Gu-HTX" firstAttribute="leading" secondItem="DOF-mi-FzQ" secondAttribute="trailing" constant="12" id="2p1-FO-x8c"/>
+                    <constraint firstItem="UxV-CX-w89" firstAttribute="leading" secondItem="DOF-mi-FzQ" secondAttribute="trailing" constant="12" id="OVl-B2-IRt"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Q2k-2Z-KGo" secondAttribute="trailing" id="RWO-pr-vl3"/>
+                    <constraint firstItem="UxV-CX-w89" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="12" id="VV5-KC-WM4"/>
+                    <constraint firstItem="Q2k-2Z-KGo" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="ViS-Zj-HwX"/>
+                    <constraint firstAttribute="bottom" secondItem="DOF-mi-FzQ" secondAttribute="bottom" constant="15" id="aIK-fQ-Kno"/>
+                    <constraint firstItem="DOF-mi-FzQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="cOi-7R-hwP"/>
+                    <constraint firstItem="StF-Gu-HTX" firstAttribute="top" secondItem="UxV-CX-w89" secondAttribute="bottom" constant="1" id="hjX-hN-W88"/>
+                    <constraint firstItem="Q2k-2Z-KGo" firstAttribute="leading" secondItem="UxV-CX-w89" secondAttribute="trailing" constant="2" id="rjR-8A-JYV"/>
+                    <constraint firstItem="DOF-mi-FzQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="upJ-SF-NMX"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" red="0.93706661462783813" green="0.93679302930831909" blue="0.96569913625717163" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <connections>
+                <outlet property="album_headerImg" destination="DOF-mi-FzQ" id="ay5-dC-AYo"/>
+                <outlet property="album_name" destination="UxV-CX-w89" id="h2r-sx-KJe"/>
+                <outlet property="album_time" destination="StF-Gu-HTX" id="7uJ-Ia-mF5"/>
+            </connections>
+            <point key="canvasLocation" x="-120" y="-15"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="108" width="108" height="108"/>
+        <image name="right_arrow" width="128" height="128"/>
+    </resources>
+</document>

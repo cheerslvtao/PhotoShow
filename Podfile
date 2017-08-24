@@ -2,7 +2,7 @@ platform :ios, ‘8.0’
 
 target ‘PhotoShow’ do
      #极光推送
-    #pod 'JPush'
+    pod 'JPush'
     
     pod 'AFNetworking'
     pod 'Masonry'
@@ -26,6 +26,7 @@ target ‘PhotoShow’ do
     pod 'UMengUShare/UI'
     #分享微信
     pod 'UMengUShare/Social/WeChat'
+    pod 'UMengUShare/Social/AlipayShare'
     #分享到QQ/QZone/TIM
     #pod ‘UMengUShare/Social/QQ'
 

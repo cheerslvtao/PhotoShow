@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16A313a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="U6b-Vx-4bR" customClass="FooterCollectionReusableView">
+            <rect key="frame" x="0.0" y="0.0" width="355" height="109"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home_camera" translatesAutoresizingMaskIntoConstraints="NO" id="ffM-9s-h6G">
+                    <rect key="frame" x="143" y="20.5" width="68" height="68"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="ffM-9s-h6G" secondAttribute="height" multiplier="1:1" id="YXt-zL-6ah"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="拍照" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EAP-IM-eFQ">
+                    <rect key="frame" x="0.0" y="93.5" width="355" height="15.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <constraints>
+                <constraint firstItem="EAP-IM-eFQ" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" id="9ft-ib-UlV"/>
+                <constraint firstAttribute="trailing" secondItem="EAP-IM-eFQ" secondAttribute="trailing" id="KL5-Fo-LEh"/>
+                <constraint firstItem="ffM-9s-h6G" firstAttribute="centerX" secondItem="U6b-Vx-4bR" secondAttribute="centerX" id="LiS-aG-q0o"/>
+                <constraint firstItem="ffM-9s-h6G" firstAttribute="centerY" secondItem="U6b-Vx-4bR" secondAttribute="centerY" id="lp1-WX-pQC"/>
+                <constraint firstItem="EAP-IM-eFQ" firstAttribute="top" secondItem="ffM-9s-h6G" secondAttribute="bottom" constant="5" id="mgy-zy-FEN"/>
+                <constraint firstItem="ffM-9s-h6G" firstAttribute="height" secondItem="U6b-Vx-4bR" secondAttribute="height" multiplier="62:100" id="mhL-Li-K7x"/>
+                <constraint firstAttribute="bottom" secondItem="EAP-IM-eFQ" secondAttribute="bottom" id="ssj-o6-Ygs"/>
+            </constraints>
+            <connections>
+                <outlet property="TakePhotoImageView" destination="ffM-9s-h6G" id="tW5-Dx-5cZ"/>
+            </connections>
+            <point key="canvasLocation" x="-961" y="-104"/>
+        </collectionReusableView>
+    </objects>
+    <resources>
+        <image name="home_camera" width="340" height="340"/>
+    </resources>
+</document>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16A313a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="HomeCollectionViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home_camera" translatesAutoresizingMaskIntoConstraints="NO" id="VyG-wo-wBg">
+                        <rect key="frame" x="23" y="23" width="74" height="74"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="VyG-wo-wBg" secondAttribute="height" multiplier="1:1" id="pj1-Ow-5TT"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Pb-Fh-REq">
+                        <rect key="frame" x="0.0" y="102" width="120" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="5Pb-Fh-REq" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="3p4-Su-XKz"/>
+                <constraint firstItem="VyG-wo-wBg" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="QoM-f1-JHz"/>
+                <constraint firstAttribute="trailing" secondItem="5Pb-Fh-REq" secondAttribute="trailing" id="RKG-72-fK4"/>
+                <constraint firstItem="VyG-wo-wBg" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="a8u-Xu-KCo"/>
+                <constraint firstAttribute="bottom" secondItem="5Pb-Fh-REq" secondAttribute="bottom" id="iG3-6e-RlM"/>
+                <constraint firstItem="VyG-wo-wBg" firstAttribute="width" secondItem="gTV-IL-0wX" secondAttribute="width" multiplier="62:100" id="nHS-Ix-Wgk"/>
+                <constraint firstItem="5Pb-Fh-REq" firstAttribute="top" secondItem="VyG-wo-wBg" secondAttribute="bottom" constant="5" id="qiI-K4-PeP"/>
+            </constraints>
+            <size key="customSize" width="98" height="120"/>
+            <connections>
+                <outlet property="homeItemImageView" destination="VyG-wo-wBg" id="GYL-hA-k3u"/>
+                <outlet property="homeItemTitle" destination="5Pb-Fh-REq" id="1Ko-0i-e9k"/>
+            </connections>
+            <point key="canvasLocation" x="-328" y="82"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="home_camera" width="340" height="340"/>
+    </resources>
+</document>

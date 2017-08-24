@@ -21,17 +21,13 @@
 #endif
     
     [[UMSocialManager defaultManager] setUmSocialAppkey:UMAppKey];
-    //QQ Qzone
-    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_QQ appKey:QQAppKey appSecret:nil redirectURL:nil];
-    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Qzone appKey:QzoneAppKey appSecret:nil redirectURL:nil];
-    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Tim appKey:QzoneAppKey appSecret:nil redirectURL:nil];
-    //删除TIM
-    //[[UMSocialManager defaultManager] removePlatformProviderWithPlatformType:UMSocialPlatformType_Tim];
+    
     //微信
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:WechatAppKey appSecret:WechatAppSecret redirectURL:@""];
     //删除微信收藏
     [[UMSocialManager defaultManager] removePlatformProviderWithPlatformType:UMSocialPlatformType_WechatFavorite];
     
+    [[UMSocialManager defaultManager] setPlaform: UMSocialPlatformType_AlipaySession appKey:AlipayAppkey appSecret:nil redirectURL:nil];
 }
 
 
