@@ -113,7 +113,7 @@ typedef void (^HttpUploadProgressBlock)(CGFloat progress);
  @param success 成功回调
  @param failure 失败回调
  */
-+ (void)getWeatherSuccess:(HttpSuccessBlock)success
++ (void)getWeatherWithLocationLat:(NSString *)lat lon:(NSString *)lon  Success:(HttpSuccessBlock)success
                   failure:(HttpFailureBlock)failure;
 
 @end

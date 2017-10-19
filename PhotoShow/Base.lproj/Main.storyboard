@@ -26,44 +26,18 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bgIMG" translatesAutoresizingMaskIntoConstraints="NO" id="L3Z-du-DVk">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HNd-6j-b6k">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HNd-6j-b6k">
                                 <rect key="frame" x="56" y="215" width="263" height="45"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="next"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EJ5-Iv-5Di">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EJ5-Iv-5Di">
                                 <rect key="frame" x="56" y="290" width="263" height="45"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="go" secureTextEntry="YES"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0qO-9Y-MhW">
-                                <rect key="frame" x="211" y="343" width="108" height="28"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="108" id="nEW-q8-xC1"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <state key="normal" title="10秒免费注册">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="registNewAccount:" destination="BYZ-38-t0r" eventType="touchUpInside" id="93H-Rj-Zpd"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WCY-q5-Ii2">
-                                <rect key="frame" x="56" y="343" width="73" height="28"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="73" id="uRm-iE-eJP"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <state key="normal" title="忘记密码">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="forgetPassword:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Kqb-B2-qhi"/>
-                                </connections>
-                            </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_logo" translatesAutoresizingMaskIntoConstraints="NO" id="bQt-yv-KUO">
                                 <rect key="frame" x="44" y="93" width="287" height="69"/>
                                 <constraints>
@@ -89,8 +63,6 @@
                             <constraint firstItem="EJ5-Iv-5Di" firstAttribute="centerX" secondItem="L3Z-du-DVk" secondAttribute="centerX" id="0Te-MQ-4Jj"/>
                             <constraint firstAttribute="trailingMargin" secondItem="HNd-6j-b6k" secondAttribute="trailing" constant="40" id="4Z1-ai-byV"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="L3Z-du-DVk" secondAttribute="bottom" id="4ld-he-ZE2"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="0qO-9Y-MhW" secondAttribute="trailing" constant="40" id="5QD-W4-SAv"/>
-                            <constraint firstItem="0qO-9Y-MhW" firstAttribute="top" secondItem="EJ5-Iv-5Di" secondAttribute="bottom" constant="8" id="5dl-3D-NJL"/>
                             <constraint firstItem="EJ5-Iv-5Di" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="40" id="8Um-Ew-D7k"/>
                             <constraint firstItem="HNd-6j-b6k" firstAttribute="height" secondItem="G8n-2q-C3E" secondAttribute="height" id="997-tj-0Hd"/>
                             <constraint firstItem="G8n-2q-C3E" firstAttribute="top" secondItem="EJ5-Iv-5Di" secondAttribute="bottom" constant="70" id="Gqi-xp-FlP"/>
@@ -99,11 +71,9 @@
                             <constraint firstItem="HNd-6j-b6k" firstAttribute="top" secondItem="bQt-yv-KUO" secondAttribute="bottom" constant="53" id="KTt-LL-Jsb"/>
                             <constraint firstItem="EJ5-Iv-5Di" firstAttribute="top" secondItem="HNd-6j-b6k" secondAttribute="bottom" constant="30" id="Kxr-r9-lzT"/>
                             <constraint firstItem="HNd-6j-b6k" firstAttribute="centerX" secondItem="L3Z-du-DVk" secondAttribute="centerX" id="L5p-84-vRY"/>
-                            <constraint firstItem="WCY-q5-Ii2" firstAttribute="top" secondItem="EJ5-Iv-5Di" secondAttribute="bottom" constant="8" id="TCf-2f-WO4"/>
                             <constraint firstItem="HNd-6j-b6k" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="40" id="UzR-gJ-G8h"/>
                             <constraint firstItem="L3Z-du-DVk" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Ygb-dj-A7G"/>
                             <constraint firstItem="bQt-yv-KUO" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="73" id="fRy-xa-tcI"/>
-                            <constraint firstItem="WCY-q5-Ii2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="40" id="lzM-WW-BE9"/>
                             <constraint firstAttribute="trailingMargin" secondItem="G8n-2q-C3E" secondAttribute="trailing" constant="40" id="qwc-TS-L0e"/>
                             <constraint firstItem="EJ5-Iv-5Di" firstAttribute="height" secondItem="G8n-2q-C3E" secondAttribute="height" id="r5T-YK-uuO"/>
                             <constraint firstItem="L3Z-du-DVk" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-20" id="soM-5v-rcX"/>

@@ -98,6 +98,9 @@
     
 }
 
+-(void)textFieldDidEndEditing:(UITextField *)textField{
+    self.numberChanged(textField.text);
+}
 
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     NSLog(@"textfield text %@",textField.text);

@@ -14,4 +14,7 @@ typedef void(^AlbumCreatedSuccess)();
 
 @property (nonatomic,copy) AlbumCreatedSuccess successBlock;
 
+@property (nonatomic,retain) NSString * albumType;
+@property (nonatomic,retain) NSString * albumName;
+
 @end

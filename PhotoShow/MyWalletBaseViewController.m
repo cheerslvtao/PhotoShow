@@ -28,11 +28,12 @@
 -(void)createUI{
     WEAKSELF;
     _topView = [[MyWallet alloc]initWithFrame:CGRectMake(0 , 20, SCREEN_WIDTH, 110)];
+    __weak typeof(_topView) weaktopview = _topView;
     _topView.getMoney = ^{
         EditingUserInfoViewController * vc = [[EditingUserInfoViewController alloc]init];
         vc.isEditingUserInfo = NO;
         vc.cash_fee = weakself.case_fee;
-        
+        vc.currentMoney = weaktopview.walletTotal.text;
         [weakself.navigationController pushViewController:vc
                                                  animated:YES];
     };
@@ -121,15 +122,15 @@
     MywalletTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"MywalletTableViewCell"];
     if (self.dataArr) {
         MyWalletModel * model = self.dataArr[indexPath.row];
-        cell.timeLabel.text = [CommonTool dateStringFromData:[model.createDate longLongValue]];
+        cell.timeLabel.text = [[CommonTool dateStringFromData:[model.createDate longLongValue]] componentsSeparatedByString:@" "][0];
         
         if (_type == YUEType) {
             //余额
             cell.helperLabel.text = model.inviteUser;
-            cell.profitLabel.text = model.money;
+            cell.profitLabel.text = [NSString stringWithFormat:@"%@",model.money];
         }else{
-            cell.helperLabel.text = model.creditType;
-            cell.profitLabel.text = model.credit;
+            cell.helperLabel.text = [model.creditType isEqualToString:@"01"]?@"相册分享":@"APP分享";
+            cell.profitLabel.text = [NSString stringWithFormat:@"%@",model.credit];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
@@ -162,5 +163,12 @@
 
     }
     return _jifenDataArr;
+}
+
+-(NSMutableArray *)dataArr{
+    if (!_dataArr) {
+        _dataArr = [[NSMutableArray alloc]init];
+    }
+    return _dataArr;
 }
 @end

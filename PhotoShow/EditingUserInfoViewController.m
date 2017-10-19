@@ -33,7 +33,7 @@
         self.titleArr = @[@"提现金额",@"银行卡号",@"银行名称",@"开户行",@"手续费"];
         self.placeholderArr = @[@"请输入提现金额",@"请输入银行卡号",@"请输入银行名称",@"请输入开户行",@""];
         self.title = @"提现";
-        [self.userInfoArr addObjectsFromArray:@[@"",@"",@"",@"",@""]];
+        self.userInfoArr = [[NSMutableArray alloc]initWithArray:@[@"",@"",@"",@""]];
     }
     NSLog(@"%@",self.userInfoArr);
     [self createUI];
@@ -127,20 +127,25 @@
 -(void)getMoneyApply{
     NSArray * keyArr = @[@"cash_money",@"bank_no",@"bank_name",@"bank_branch"];
     NSMutableDictionary * params = [[NSMutableDictionary alloc]init];
-    for (int i =0 ; i<keyArr.count; i++) {
+
+    for (int i =0 ; i<self.userInfoArr.count; i++) {
+        if ([self.userInfoArr[i] isEqualToString:@""]) {
+            [HUDManager toastmessage:@"请完善信息" superView:self.view];
+            return;
+        }
         [params setObject:self.userInfoArr[i] forKey:keyArr[i]];
     }
-    [params setObject:@"" forKey:@""];
+    [params setObject:self.currentMoney forKey:@"money"];
     NSLog(@"%@",params);
     
     [HTTPTool postWithPath:url_userCache params:params success:^(id json) {
         if ([json[@"code"] intValue] == 200 && [json[@"success"] intValue] == 1) {
-           
+            [HUDManager toastmessage:@"操作成功，请耐心等待" superView:self.view];
         }else{
             [HUDManager toastmessage:json[@"msg"] superView:self.view];
         }
     } failure:^(NSError *error) {
-        
+        [HUDManager toastmessage:@"操作失败，请重试" superView:self.view];
     } alertMsg:@"信息上传中..." successMsg:@"信息上传中..." failMsg:@"信息上传失败，请重试" showView:self.view];
 }
 

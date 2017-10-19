@@ -19,6 +19,8 @@
 
 @property (nonatomic,retain)WKWebView * webview;
 
+/** H5预览页面 */
+@property (nonatomic,retain) NSString * H5Url;
 
 @end
 
@@ -92,6 +94,7 @@
         [strongself presentViewController:pop animated:YES completion:nil];
         
         pop.block = ^(NSInteger index) {
+            [strongself.webview stopLoading];
             switch ((long)index) {
                 case 0:{
                     SubmitOrderViewController * submitVC = [[SubmitOrderViewController alloc]init];
@@ -119,16 +122,23 @@
 
 #pragma mark - 上传文档
 -(void)upLoadFile{
-//    FileModel * model = self.dataArr[indexPath.row];
-    
-    [HTTPTool uploadImageWithPath:url_uploadFile params:nil thumbName:@"imageData" fileName:self.model.fileName file:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:self.model.filePath]] success:^(id json) {
-        NSLog(@"%@",json);
-    } failure:^(NSError *error) {
-        NSLog(@"%@",error);
-    } progress:^(CGFloat progress) {
-        NSLog(@"%f",progress);
-    }];
-}
+    if ([_model.fileSuffix isEqualToString:@"pdf"] || [_model.fileSuffix isEqualToString:@"ppt"]){
+        
+        [HTTPTool uploadImageWithPath:url_uploadFile params:nil thumbName:@"imageData" fileName:self.model.fileName file:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:self.model.filePath]] success:^(id json) {
+            NSLog(@"%@",json);
+        } failure:^(NSError *error) {
+            NSLog(@"%@",error);
+        } progress:^(CGFloat progress) {
+            NSLog(@"%f",progress);
+        }];
+
+    }else{
+        [CommonTool alertWithTitle:@"提示" msg:@"Sorry！暂时只支持上传后缀为pdf、ppt文档" surebutton:^{
+            
+        }];
+    }
+
+    }
 
 -(void)share{
     [UMSocialUIManager showShareMenuViewInWindowWithPlatformSelectionBlock:^(UMSocialPlatformType platformType, NSDictionary *userInfo) {
@@ -139,10 +149,18 @@
         model.vc = self;
         model.platfromType = platformType;
         if (self.isShare) {
-            model.thumbURL =@"http://image.baidu.com/search/detail?ct=503316480&z=&tn=baiduimagedetail&ipn=d&ie=utf-8&in=24401&cl=2&lm=-1&st=-1&step_word=&rn=1&cs=&ln=1998&fmq=1402900904181_R&ic=0&s=&se=1&sme=0&tab=&width=&height=&face=0&is=&istype=2&ist=&jit=&fr=ala&ala=1&alatpl=others&pos=1&pn=4&word=%E5%9B%BE%E7%89%87%20%E7%BE%8E%E5%A5%B3&di=182764656140&os=602872014,2379713269&pi=0&objurl=http%3A%2F%2Ff4.topit.me%2F4%2F87%2F00%2F11213791114e400874o.jpg";
-            model.webpageUrl = @"https://www.baidu.com";
+            model.thumbURL =@"";
+            model.webpageUrl = [NSString stringWithFormat:@"%@/zhuce.html?referee=%@",baseAPI,[[CommonTool getUserInfo] objectForKey:@"phone"]];
             model.shareTitle = @"我的个性相册";
             model.shareMsg = @"快来一起分享我的个性相册";
+            [HTTPTool postWithPath:url_myShare params:@{@"type":@"02"} success:^(id json) {
+                if ([json[@"code"] integerValue] == 200) {
+                    
+                }
+                [UMManager share:model];
+            } failure:^(NSError *error) {
+                
+            }];
 
         }else{
             // 构建分享信息
@@ -150,8 +168,16 @@
             model.webpageUrl = [NSString stringWithFormat:@"%@/temp/getAlbum?album_id=%@",baseAPI,self.albumModel.albumId];
             model.shareTitle = @"我的个性相册";
             model.shareMsg = @"快来一起分享我的个性相册";
+            [HTTPTool postWithPath:url_myShare params:@{@"type":@"01",@"album_id":self.albumModel.albumId} success:^(id json) {
+                if ([json[@"code"] integerValue] == 200) {
+                    
+                }
+                [UMManager share:model];
+            } failure:^(NSError *error) {
+                
+            }];
         }
-        [UMManager share:model];
+        
 
     }];
 
@@ -179,14 +205,26 @@
     self.webview.navigationDelegate = self;
     NSURLRequest * request = nil;
     if (self.isShare){
-        request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.baidu.com"]];
+        request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/myshare.html",baseAPI]]];
+        [self.webview loadRequest:request];
     }else if (self.filePath.length > 0) {
         request = [NSURLRequest requestWithURL:[NSURL fileURLWithPath:self.filePath]];
+        [self.webview loadRequest:request];
     }else{
-        request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/temp/getAlbum?album_id=%@",baseAPI,self.albumModel.albumId]]];
+        request = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/temp/getAlbum?id=%@",baseAPI,self.albumModel.albumId]]];
+        [HTTPTool postWithPath:@"/temp/getAlbum" params:@{@"album_id":self.albumModel.albumId} success:^(id json) {
+            if ([json[@"code"] integerValue] == 200 && [json[@"success"] intValue] == 1) {
+                self.H5Url = [NSString stringWithFormat:@"%@%@?id=%@",baseAPI,json[@"data"][@"url"],self.albumModel.albumId];
+                [self.webview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.H5Url]]];
+            }else{
+                [HUDManager toastmessage:@"请求失败请重试" superView:self.view];
+            }
+        } failure:^(NSError *error) {
+            [HUDManager toastmessage:@"请求失败请重试" superView:self.view];
+        }];
     }
     NSLog(@"%@",request);
-    [self.webview loadRequest:request];
+    
     [self.view addSubview:self.webview];
     
     //监听webView加载进度

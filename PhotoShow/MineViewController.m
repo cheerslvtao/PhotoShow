@@ -208,7 +208,7 @@
 
 #pragma mark -- 加载数据
 -(void)loadData{
-    [HTTPTool postWithPath:url_userinfo params:nil success:^(id json) {
+    [HTTPTool postWithPath:url_userinfo params:@{} success:^(id json) {
         if ([json[@"code"] intValue] == 200 && [json[@"success"] intValue]) {
             //保存个人信息
             [CommonTool setUserInfo:json[@"data"]];
@@ -217,12 +217,12 @@
             NSLog(@"%@",[NSString stringWithFormat:@"%@%@",baseAPI,self.usermodel.headPortrait]);
             [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",baseAPI,self.usermodel.headPortrait]] placeholderImage:[UIImage imageNamed:@"headerImg"]];
             self.userNameLabel.text = self.usermodel.nickname ? self.usermodel.nickname : self.usermodel.username;
-            NSMutableAttributedString * rightattrstr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"积分 %.0lf",self.usermodel.money]];
+            NSMutableAttributedString * rightattrstr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"积分 %.0lf",self.usermodel.credit]];
             [rightattrstr addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]} range:NSMakeRange(0, 2)];
             [rightattrstr addAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} range:NSMakeRange(0, rightattrstr.length)];
             [_jifenButton setAttributedTitle:rightattrstr forState:UIControlStateNormal];
             
-            NSMutableAttributedString * leftattrstr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"余额 %.2lf元",self.usermodel.credit]];
+            NSMutableAttributedString * leftattrstr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"余额 %.2lf元",self.usermodel.money]];
             [leftattrstr addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]} range:NSMakeRange(0, 2)];
             [leftattrstr addAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} range:NSMakeRange(0, leftattrstr.length)];
             [_moneyButton setAttributedTitle:leftattrstr forState:UIControlStateNormal];

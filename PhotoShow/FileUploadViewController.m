@@ -78,16 +78,19 @@
 
 }
 
+#pragma mark - 上传文当
 -(void)uploadFile:(NSIndexPath *)indexPath{
     FileModel * model = self.dataArr[indexPath.row];
+    //如果不是pdf 和 PPT 类型的文档 不允许上传
     
-    [HTTPTool uploadImageWithPath:url_uploadFile params:nil thumbName:@"imageData" fileName:model.fileName file:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:model.filePath]] success:^(id json) {
-        NSLog(@"%@",json);
-    } failure:^(NSError *error) {
-        NSLog(@"%@",error);
-    } progress:^(CGFloat progress) {
-        NSLog(@"%f",progress);
-    }];
+        [HTTPTool uploadImageWithPath:url_uploadFile params:nil thumbName:@"imageData" fileName:model.fileName file:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:model.filePath]] success:^(id json) {
+            NSLog(@"%@",json);
+        } failure:^(NSError *error) {
+            NSLog(@"%@",error);
+        } progress:^(CGFloat progress) {
+            NSLog(@"%f",progress);
+        }];
+
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

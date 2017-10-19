@@ -35,6 +35,7 @@
     
     [self crateCustomNav];
     [self createUI];
+    
 }
 
 #pragma mark - 自定义nav
@@ -224,7 +225,8 @@
         }
         [params setObject:[textfield text] forKey:keys[i]];
     }
-    
+    //注册加type参数
+    [params setObject:@"register" forKey:@"type"];
     [HTTPTool postWithPath:url_register params:params success:^(id json) {
         if ([json[@"code"] intValue] == 200){
             //注册成功
@@ -256,7 +258,7 @@
     
 }
 
-
+#pragma mark -  修改密码
 -(void)changePassword{
     //配置参数
     NSArray * keys = @[@"username",@"smsCode",@"password"];

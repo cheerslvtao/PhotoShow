@@ -11,7 +11,9 @@
 typedef enum : NSUInteger {
     EditingAlbum = 0,  /** 编辑相册 */
     AddAlbum, /** 新建相册 */
+    diray, /** 日记本 */
 } EditingType;
+
 @interface EditingAlbumViewController : BaseViewController
 
 /** 拍照的照片数据 */

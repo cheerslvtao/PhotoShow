@@ -27,6 +27,7 @@
         FileModel * model = [[FileModel alloc]init];
         model.fileName = [file lastPathComponent];
         model.filePath = [NSString stringWithFormat:@"%@/%@",documentDir,[file lastPathComponent]];
+        model.fileSuffix = [file pathExtension];
         [dirArray addObject:model];
         NSLog(@"%@",file);
         NSLog(@"%@",[file lastPathComponent]); //文件名

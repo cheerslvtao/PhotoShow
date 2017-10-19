@@ -10,6 +10,8 @@
 
 @interface Globleconst : NSObject
 
+extern NSString * const APPSchemes ;
+
 #pragma mark - 第三方key
 /** 友盟 */
 extern NSString * const UMAppKey;
@@ -44,7 +46,7 @@ extern NSString * const url_updatePassword;
 extern NSString * const url_addressAll;
 extern NSString * const url_saveAddress;
 extern NSString * const url_updateIsidefaultAddress;
-extern NSString * const updateAddress;
+extern NSString * const url_updateAddress;
 extern NSString * const url_delAddress;
 
 /** 相册相关 */
@@ -62,6 +64,17 @@ extern NSString * const url_printAlbum;
 extern NSString * const url_createOrder;
 extern NSString * const url_getOrders;
 extern NSString * const url_getOrder;
+extern NSString * const url_subOrders;
+extern NSString * const url_delOrders;
+
+/** 支付成功通知后台 */
+extern NSString * const url_alipay_notify;
+
+/** 生活日记 */
+extern NSString * const url_createDiaryPhoto; //带照片
+extern NSString * const url_createDiary; //不带照片
+extern NSString * const url_getDiarys; //查询日记本
+
 
 /** 钱包相关 */
 extern NSString * const url_myMoney;
@@ -71,7 +84,7 @@ extern NSString * const url_userCache;
 /** 上传照片 */
 extern NSString * const url_uploadImage ;
 
-
+extern NSString * const url_myShare;
 
 #pragma mark -- URL 结束
 

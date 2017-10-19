@@ -31,6 +31,7 @@
 -(void)setNavigationBarRightItem:(NSString * )itemTitle itemImg:(UIImage *)itemImg currentNavBar:(UINavigationItem *)baritem curentViewController:(UIViewController *)currentVC{
     
     UIButton * button =  [UIButton buttonWithType:UIButtonTypeCustom];
+    
     [button setImage:itemImg forState:UIControlStateNormal];
     if (itemTitle) {
         [button setTitle:itemTitle forState:UIControlStateNormal];
@@ -50,7 +51,12 @@
         button.frame = CGRectMake(0, 0, 70, 30);
     }else{
         button.frame = CGRectMake(0, 0, 40, 40);
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 11) {
+            button.imageView.frame = CGRectMake(0, 0, 40, 40);
+        }
     }
+    
+    
     
     [button addTarget:currentVC action:@selector(rightItemClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem * item_button = [[UIBarButtonItem alloc]initWithCustomView:button];

@@ -1,4 +1,4 @@
-//
+//suffix
 //  FileManagerTool.h
 //  PhotoShow
 //
@@ -27,6 +27,7 @@
 @property (nonatomic,retain) NSString * fileName;
 @property (nonatomic,retain) NSString * imgName;
 @property (nonatomic,retain) NSString * filePath;
+@property (nonatomic,retain) NSString * fileSuffix;
 
 @end
 

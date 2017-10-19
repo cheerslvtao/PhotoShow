@@ -99,7 +99,14 @@
         [paras setObject:_parameterArr[i] forKey:keyArr[i]];
     }
     NSLog(@"%@",paras);
-    [HTTPTool postWithPath:url_saveAddress params:paras success:^(id json) {
+    NSString * url = @"";
+    if (self.model) {
+        url = url_updateAddress;
+        [paras setObject:_model.addressId forKey:@"id"];
+    }else{
+        url = url_saveAddress;
+    }
+    [HTTPTool postWithPath:url params:paras success:^(id json) {
         if ([json[@"code"] intValue] == 200 && [json[@"success"] intValue] == 1) {
             [HUDManager toastmessage:@"保存成功" superView:self.view];
             self.freshAddressData();
@@ -156,6 +163,9 @@
         }
     }
     
+    if (indexPath.row == 1){
+        cell.infocontent.keyboardType = UIKeyboardTypeNumberPad;
+    }
     cell.infotitle.text = self.dataArr[indexPath.row];
     cell.infocontent.placeholder = self.placeholdArr[indexPath.row];
     cell.infocontent.delegate = self;

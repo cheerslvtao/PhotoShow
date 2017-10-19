@@ -101,4 +101,28 @@
     return @"文档";
 }
 
+
+#pragma mark - 订单状态
+//0待支付 1已支付/带审核 2审核成功 3待收货/待发货 4已发货 5已收货 6审核失败 7取消
++(NSString *)orderStates:(NSString *)states{
+    NSDictionary * dic = @{@"0":@"待支付",
+                           @"1":@"待审核",
+                           @"2":@"审核成功",
+                           @"3":@"待收货",
+                           @"4":@"待发货",
+                           @"5":@"已收货",
+                           @"6":@"审核失败",
+                           @"7":@"取消",};
+    return dic[states];
+}
+
+
++(void)alertWithTitle:(NSString *)title msg:(NSString *)message surebutton:(void (^)())sure{
+    UIAlertController * alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        sure();
+    }]];
+    [WINDOW.rootViewController presentViewController:alert animated:YES completion:nil];
+
+}
 @end

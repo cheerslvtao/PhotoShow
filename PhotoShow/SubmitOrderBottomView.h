@@ -22,4 +22,10 @@
 
 @property (nonatomic,weak) id<SubmitOrderDelegate> delegate;
 
+/** 是否只显示一个按钮  
+ YES显示一个按钮
+ NO显示一个Label 一个按钮 
+*/
+@property (nonatomic) BOOL isOneView;
+
 @end

@@ -58,15 +58,19 @@
     
 }
 
-+ (void)getWeatherSuccess:(HttpSuccessBlock)success
-                   failure:(HttpFailureBlock)failure {
+
+    
+//lat=40.242266&lng=116.2278
++ (void)getWeatherWithLocationLat:(NSString *)lat lon:(NSString *)lon Success:(HttpSuccessBlock)success
+                          failure:(HttpFailureBlock)failure {
     
     NSString *appcode = @"5291f413ae324e0482ed1fdcc880897f";
     NSString *host = @"https://ali-weather.showapi.com";
     NSString *path = @"/gps-to-weather";
-    NSString *querys = @"?from=3&lat=40.242266&lng=116.2278&need3HourForcast=0&needAlarm=0&needHourData=0&needIndex=0&needMoreDay=0";
-    NSString *url = [NSString stringWithFormat:@"%@%@%@",  host,  path , querys];
+    NSString *querys = [NSString stringWithFormat:@"?from=3&lat=%@&lng=%@&need3HourForcast=0&needAlarm=0&needHourData=0&needIndex=0&needMoreDay=0",lat,lon];
     
+    NSString *url = [NSString stringWithFormat:@"%@%@%@",  host,  path , querys];
+
     //这只请求头
     [[[AFHttpClient sharedClient] requestSerializer] setValue:[NSString stringWithFormat:@"APPCODE %@" ,  appcode] forHTTPHeaderField:@"Authorization"];
     

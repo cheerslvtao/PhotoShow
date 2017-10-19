@@ -37,4 +37,6 @@
 @property (nonatomic,retain) NSString * payType;
 @property (nonatomic,retain) NSString * pageType;
 @property (nonatomic,retain) NSString * addTime;
+
+
 @end

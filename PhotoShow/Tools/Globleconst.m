@@ -10,6 +10,8 @@
 
 @implementation Globleconst
 
+NSString * const APPSchemes = @"photoshow";
+
 #pragma mark - 第三方key
 /** 友盟 */
 NSString * const UMAppKey = @"596639a9b27b0a236b001b9e";
@@ -28,8 +30,11 @@ NSString * const AlipayAppkey =@"2017080107985594";
 NSString * const JPushKey = @"115992f78a81b3aee60612fb";
 
 //http://123.56.222.110:8080
-NSString * const baseAPI = @"http://123.56.222.110:8080";
+//http://60.205.113.35:8080
+//1n588801d6.iok.la:19191
+//NSString * const baseAPI = @"http://1n588801d6.iok.la:19191";
 
+NSString * const baseAPI = @"http://60.205.113.35:8080";
 
 /** 登录注册相关 */
 NSString * const url_login = @"/api/login";
@@ -45,7 +50,7 @@ NSString * const url_updatePassword = @"/api/updatePassword";
 NSString * const url_addressAll = @"/api/findAddressAll";
 NSString * const url_saveAddress = @"/api/saveAddress";
 NSString * const url_updateIsidefaultAddress = @"/api/updateIsidefaultAddress";
-NSString * const updateAddress = @"/api/updateAddress";
+NSString * const url_updateAddress = @"/api/updateAddress";
 NSString * const url_delAddress = @"/api/delAddress";
 
 /** 相册相关 */
@@ -63,6 +68,16 @@ NSString * const url_printAlbum = @"/api/printAlbum";
 NSString * const url_createOrder = @"/api/createOrder";
 NSString * const url_getOrders = @"/api/getOrders";
 NSString * const url_getOrder = @"/api/getOrder";
+NSString * const url_subOrders = @"/api/subOrders";
+NSString * const url_delOrders = @"/api/delOrders";
+
+/** 支付成功通知后台 */
+NSString * const url_alipay_notify = @"/notify/aliPay_notify";
+
+/** 生活日记 */
+NSString * const url_createDiaryPhoto = @"/api/createDiaryPhoto"; //带照片
+NSString * const url_createDiary = @"/api/createDiary"; //不带照片
+NSString * const url_getDiarys = @"/api/getDiarys"; //查询日记本
 
 /** 钱包相关 */
 NSString * const url_myMoney =@"/api/myMoney";
@@ -72,6 +87,8 @@ NSString * const url_userCache = @"/api/userCache";
 /** 上传照片 */
 NSString * const url_uploadImage =@"/api/uploadImage";
 
+/** 分享 */
+NSString * const url_myShare = @"/api/myShare";
 
 NSString * const image_placeholder = @"placeholderImg";
 

@@ -10,6 +10,7 @@
 
 
 typedef void(^clickPhotoBlock)(NSDictionary * modelDic);
+typedef void(^albumIsSubmit)();
 
 @interface PhotoCollectionView : UIView<UICollectionViewDelegateFlowLayout,UICollectionViewDataSource>
 
@@ -26,7 +27,10 @@ typedef void(^clickPhotoBlock)(NSDictionary * modelDic);
 /** 相册id */
 @property (nonatomic,retain) NSString * albumId;
 
+/** 点击item回调 */
 @property (nonatomic,copy) clickPhotoBlock block;
 
+/** 改相册已经提交订单了 不能再修改 */
+@property (nonatomic,copy) albumIsSubmit isSubmitBlock;
 
 @end

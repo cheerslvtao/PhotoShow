@@ -20,6 +20,7 @@
 
 #import <MediaPlayer/MediaPlayer.h>
 #import <MobileCoreServices/MobileCoreServices.h>
+#import "ViewController.h"
 
 @interface HomeViewController ()<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
@@ -58,6 +59,13 @@
         NSLog(@"left item click");
         [weakself.navigationController pushViewController:[[MineViewController alloc]init] animated:YES];
     };
+}
+
+#pragma mark - 检查是否登录
+-(BOOL)checkLogin{
+    
+    return [NSUSERDEFAULT objectForKey:@"token"]?YES:NO;
+
 }
 
 #pragma mark - 配置UI
@@ -105,10 +113,18 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"%ld",indexPath.item);
-    PhotoShowListViewController * vc = [[PhotoShowListViewController alloc]init];
-    vc.albumtype = indexPath.row+1;
-    [self.navigationController pushViewController:vc
-                                         animated:YES];
+    if ([self checkLogin]) {
+        PhotoShowListViewController * vc = [[PhotoShowListViewController alloc]init];
+        vc.albumtype = indexPath.row+1;
+        [self.navigationController pushViewController:vc
+                                             animated:YES];
+    }else{
+        UIStoryboard *mainStory = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        //获取Main.storyboard中的第2个视图
+        ViewController * vc = [mainStory instantiateViewControllerWithIdentifier:@"ViewController"];
+        [self presentViewController:vc animated:YES completion:nil];
+    }
+   
 }
 
 

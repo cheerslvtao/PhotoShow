@@ -135,6 +135,11 @@
                 }
                 i++;
             }
+            if ([json[@"data"][@"isUpdate"] intValue] == 1){
+                [CommonTool alertWithTitle:@"提示" msg:json[@"msg"] surebutton:^{
+                    self.isSubmitBlock();
+                }];
+            }
             [self.photoCollectionView reloadData];
 
         }

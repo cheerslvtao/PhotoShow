@@ -22,10 +22,21 @@
     UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(aboutUs:)];
     [self.aboutUsCell addGestureRecognizer:tap];
     
+    self.openNotification.on = [[NSUSERDEFAULT objectForKey:@"push"] isEqualToString:@"push"];
+
+    
 }
 
 -(void)aboutUs:(UITapGestureRecognizer *)tap{
     [self.navigationController pushViewController:[[AboutUsViewController alloc]init] animated:YES];
+}
+- (IBAction)openPush:(UISwitch *)sender {
+    NSLog(@"%d",sender.isOn);
+    if (sender.isOn) {
+        [NSUSERDEFAULT setObject:@"push" forKey:@"push"];
+    }else{
+        [NSUSERDEFAULT setObject:@"notpush" forKey:@"push"];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

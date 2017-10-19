@@ -17,6 +17,8 @@
 #import "FileUploadViewController.h"
 #import "DocumentTableViewCell.h"
 #import "SubmitOrderViewController.h"
+#import "EditingAlbumViewController.h"
+#import "WriteDiaryViewController.h"
 
 @interface PhotoShowListViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIPopoverPresentationControllerDelegate>
 
@@ -68,15 +70,63 @@
         }];
         
         [self.albumTableView.mj_header beginRefreshing];
+    }else if(self.albumtype == LifeAlbum){
+        UIButton * button =  [UIButton buttonWithType:UIButtonTypeCustom];
+        [button setTitle:@"写日记" forState:UIControlStateNormal];
+        button.frame = CGRectMake(0, 0, 60, 44);
+        [button addTarget:self action:@selector(writeDiray) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem * item_button = [[UIBarButtonItem alloc]initWithCustomView:button];
+        self.navigationItem.rightBarButtonItem = item_button;
+        
+        [self loadData:NO];
+        
     }else{
         [self loadData:NO];
     }
 }
 
+-(void)writeDiray{
+    WriteDiaryViewController * vc = [[WriteDiaryViewController alloc]init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+#pragma mark - 加载日记列表
+-(void)loadDiaryDataWithSearch:(BOOL)isSearch{
+//    NSMutableDictionary * params = [[NSMutableDictionary alloc]initWithDictionary:@{@"page":[NSString stringWithFormat:@"%d",self.filepage],@"size":@"10"}];
+//    if (_keyWordTextField.text.length > 0 && isSearch) {
+//        params[@"album_name"] = _keyWordTextField.text;
+//    }
+//    [HTTPTool postWithPath:url_getDiarys params:params success:^(id json) {
+//        if ([json[@"code"] integerValue] == 200 && [json[@"success"] integerValue] == 1) {
+//            if (self.isrefresh) {
+//                [self.dataArr removeAllObjects];
+//            }
+//            for (NSDictionary * dic in json[@"data"][@"userFiles"]) {
+////                DocumentModel * model = [[DocumentModel alloc]init];
+////                [model setValuesForKeysWithDictionary:dic];
+////                [self.dataArr addObject:model];
+//            }
+//            [self.albumTableView reloadData];
+//        }
+//        [self.albumTableView.mj_header endRefreshing];
+//        if ([json[@"data"][@"userFiles"] count] == 0) {
+//            [self.albumTableView.mj_footer endRefreshingWithNoMoreData];
+//        }else{
+//            [self.albumTableView.mj_footer endRefreshing];
+//        }
+//    } failure:^(NSError *error) {
+//        [self.albumTableView.mj_header endRefreshing];
+//        
+//        [self.albumTableView.mj_footer endRefreshing];
+//    } ];
+    [self loadData:NO];
+}
+
+
 #pragma mark - 加载相册列表
 -(void)loadData:(BOOL)isSearch{
     
-    // 01生活日记，02旅游相册，03成长相册
+    //02旅游相册，03成长相册
     NSMutableDictionary * params = [[NSMutableDictionary alloc]initWithDictionary:@{@"albumType":[NSString stringWithFormat:@"0%lu",(unsigned long)self.albumtype]}];
     if (_keyWordTextField.text.length > 0 && isSearch) {
         params[@"album_name"] = _keyWordTextField.text;
@@ -144,6 +194,26 @@
         vc.successBlock = ^{
             [self loadData:NO];
         };
+        if (self.albumtype == LifeAlbum) {
+            vc.albumType = @"01";
+        }
+        switch (self.albumtype) {
+            case LifeAlbum:
+                vc.albumType = @"01";
+                break;
+            case travelAlbum:
+                vc.albumType = @"02";
+                break;
+            case growupAlbum:
+                vc.albumType = @"03";
+                break;
+            case documentAlbum:
+                vc.albumType = @"10";
+                break;
+            default:
+                break;
+        }
+        vc.albumName = self.title;
         [self.navigationController pushViewController:vc animated:YES];
     }
 }

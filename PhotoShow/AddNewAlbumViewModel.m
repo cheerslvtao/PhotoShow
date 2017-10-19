@@ -59,7 +59,12 @@
 }
 
 +(void)getUserAllPhotosWithParameters:(NSDictionary *)params block:(void (^)(NSArray<PhotosModel *> *))block failure:(void (^)(NSError *))faile{
-    [HTTPTool postWithPath:url_getPhotos params:params success:^(id json) {
+    NSString * url = url_getPhotos;
+    if ([params[@"type"] isEqualToString:@"01"]){
+        //日记
+        url = url_getDiarys;
+    }
+    [HTTPTool postWithPath:url params:params success:^(id json) {
         if ([json[@"code"] integerValue] == 200 && [json[@"success"] integerValue] == 1) {
             NSMutableArray * modelArr = [[NSMutableArray alloc]init];
             for (NSDictionary * dic in json[@"data"][@"photoList"]) {

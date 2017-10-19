@@ -30,9 +30,12 @@
 
 @property (nonatomic,retain) NSDictionary * currentAlbumType;
 
+/** 当前选中的模板 */
+@property (nonatomic,retain) TemplateModel * currentTemplateModel;
 
 /** 相册模板数组 */
 @property (nonatomic,retain) NSArray * templateArr;
+@property (nonatomic,retain) UIScrollView * templateContainer; //模板容器
 
 /** 用户所有照片 */
 @property (nonatomic,retain) NSMutableArray * userPhotoArr;
@@ -53,36 +56,45 @@
     self.rightNavBlock = ^{
         
         NSString * phoneids = @"";
+        NSLog(@"%ld",weakself.selectedPhotoArr.count);
         for (PhotosModel * model in weakself.selectedPhotoArr) {
             if ([phoneids isEqualToString:@""]) {
-                phoneids = model.photoid;
-            }
-            phoneids = [NSString stringWithFormat:@"%@,%@",phoneids,model.photoid];
-        }
-        if (phoneids.length == 0){
-            [HUDManager toastmessage:@"您还未选择照片" superView:weakself.view];
-        }
-        
-        weakself.parametersDic[@"phoneids"] = phoneids;
-        NSLog(@"%@",weakself.parametersDic);
-        [HTTPTool postWithPath:url_createAlbums params:weakself.parametersDic success:^(id json) {
-            if([json[@"code"] intValue]==200 && [json[@"success"] intValue] == 1){
-                [HUDManager toastmessage:@"创建成功" superView:weakself.view];
-                weakself.successBlock();
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [weakself.navigationController popViewControllerAnimated:YES];
-                });
+                phoneids = [NSString stringWithFormat:@"%@",model.photoid];
             }else{
-                [HUDManager toastmessage:@"创建失败，请重试" superView:weakself.view];
+                phoneids = [NSString stringWithFormat:@"%@,%@",phoneids,model.photoid];
             }
-        } failure:^(NSError *error) {
+        }
+        if ([[phoneids componentsSeparatedByString:@","] count] != [weakself.currentTemplateModel.photoCount intValue]){
+            [HUDManager toastmessage:[NSString stringWithFormat:@"该模板相册需要%@张相片才能制作",weakself.currentTemplateModel.photoCount] superView:weakself.view];
+        }else if ([weakself.parametersDic[@"albumName"] length] == 0){
+            [HUDManager toastmessage:@"请填写相册名称" superView:weakself.view];
+        }else{
             
-        } alertMsg:@"正在保存..." successMsg:@"保存保存..." failMsg:@"保存失败" showView:weakself.view];
+            weakself.parametersDic[@"phoneids"] = phoneids;
+            NSLog(@"%@",weakself.parametersDic);
+            [HTTPTool postWithPath:url_createAlbums params:weakself.parametersDic success:^(id json) {
+                if([json[@"code"] intValue]==200 && [json[@"success"] intValue] == 1){
+                    [HUDManager toastmessage:@"创建成功" superView:weakself.view];
+                    weakself.successBlock();
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [weakself.navigationController popViewControllerAnimated:YES];
+                    });
+                }else{
+                    [HUDManager toastmessage:@"创建失败，请重试" superView:weakself.view];
+                }
+            } failure:^(NSError *error) {
+                
+            } alertMsg:@"正在保存..." successMsg:@"保存保存..." failMsg:@"保存失败" showView:weakself.view];
+
+        }
     };
     
     [self createUI];
     [self createCollectionView];
     
+    //监听模板是否改变
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(templateChanged:) name:@"templateChanged" object:nil];
+
 }
 
 
@@ -98,7 +110,7 @@
     [self.addAlbumTableView registerNib:[UINib nibWithNibName:@"NewAlbumInputTableViewCell" bundle:nil] forCellReuseIdentifier:@"NewAlbumInputTableViewCell"];
     [self.addAlbumTableView registerNib:[UINib nibWithNibName:@"NewALbumOptionTableViewCell" bundle:nil] forCellReuseIdentifier:@"NewALbumOptionTableViewCell"];
     [self.addAlbumTableView registerNib:[UINib nibWithNibName:@"NewAlbumPhotoTemplateTableViewCell" bundle:nil] forCellReuseIdentifier:@"NewAlbumPhotoTemplateTableViewCell"];
-
+    
     WEAKSELF;
     self.photospage = 0;
     self.addAlbumTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
@@ -133,7 +145,7 @@
 #pragma mark - 获取基础数据
 -(void)loadBaseData{
     WEAKSELF;
-    [AddNewAlbumViewModel getTemplateListWithType:self.parametersDic[@"albumType"] temlateContainer:objc_getAssociatedObject(self, @"templateContainer") Block:^(NSArray<TemplateModel *> * templateLists) {
+    [AddNewAlbumViewModel getTemplateListWithType:self.parametersDic[@"albumType"]?self.parametersDic[@"albumType"]:self.albumType temlateContainer:self.templateContainer Block:^(NSArray<TemplateModel *> * templateLists) {
         weakself.templateArr = templateLists;
     }];
 }
@@ -148,16 +160,21 @@
     if (self.parametersDic[@"endTime"]) {
         dic[@"endTime"] =self.parametersDic[@"endTime"];
     }
+    
+    dic[@"type"] = self.albumType;
     [AddNewAlbumViewModel getUserAllPhotosWithParameters:dic block:^(NSArray<PhotosModel *> * photomodels) {
+        if (self.photospage == 1) {
+            [self.userPhotoArr removeAllObjects];
+        }
         if (photomodels.count>0){
             [self.userPhotoArr addObjectsFromArray:photomodels];
-            [self.photoCollectionView reloadData];
             [self.addAlbumTableView.mj_footer endRefreshing];
         }
         if (photomodels.count < 16) {
             [self.addAlbumTableView.mj_footer endRefreshingWithNoMoreData];
         }
-        
+        [self.photoCollectionView reloadData];
+
     } failure:^(NSError *error) {
         [self.addAlbumTableView.mj_footer endRefreshing];
     }];
@@ -228,12 +245,8 @@
         return cell;
     }else if (indexPath.row == 2){
         NewAlbumPhotoTemplateTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"NewAlbumPhotoTemplateTableViewCell"];
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            objc_setAssociatedObject(self, @"templateContainer", cell.templateAlbumContainer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-            [self loadBaseData];
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(templateChanged:) name:@"templateChanged" object:nil];
-        });
+        self.templateContainer = cell.templateAlbumContainer;
+        
         return cell;
     }
     
@@ -243,8 +256,8 @@
             cell.timeLabel.text = self.currentAlbumType[@"name"];
         }else{
             //默认是生活相册
-            cell.timeLabel.text = @"生活日记";
-            self.parametersDic[@"albumType"] = @"01";
+            cell.timeLabel.text =self.albumName;
+            self.parametersDic[@"albumType"] =self.albumType;
         }
         cell.rightLogo.image = [UIImage imageNamed:@"daosanjiao"];
         [cell.rightLogo mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -276,9 +289,13 @@
             if (result) {
                 cell.timeLabel.text = result[@"name"];
                 _parametersDic[@"albumType"] = result[@"type"];
+                self.albumType = result[@"type"];
+                self.albumName = result[@"name"];
                 _currentAlbumType = result;
             }
             [self loadBaseData];
+            self.photospage = 1;
+            [self loadPhotosData];
             [weakpicker removeFromSuperview];
         };
         [self.view addSubview:picker];
@@ -303,6 +320,8 @@
             }completion:^(BOOL finished) {
                 [weakSelf.datePickerView removeFromSuperview];
             }];
+            self.photospage = 1;
+            [self loadPhotosData];
         };
         self.datePickerView.returnBlock = myblock;
     }
@@ -319,7 +338,9 @@
     for (int i =0 ; i<self.templateArr.count; i++) {
         TemplateModel * model = self.templateArr[i];
         if (model.selectedImageView == noti.object) {
+            self.currentTemplateModel = model;
             _parametersDic[@"albumTemplateId"] = model.templateid;
+            break;
         }
     }
     NSLog(@"%@",noti.object);
@@ -382,6 +403,10 @@
 }
 
 
+-(void)setTemplateContainer:(UIScrollView *)templateContainer{
+    _templateContainer = templateContainer;
+    [self loadBaseData];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

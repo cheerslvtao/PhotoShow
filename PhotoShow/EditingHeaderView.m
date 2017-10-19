@@ -23,7 +23,7 @@
 -(void)createUI{
     
     _photoview = [[UIImageView alloc]init];
-    _photoview.image = [UIImage imageNamed:@"108"];
+    _photoview.image = [UIImage imageNamed:image_placeholder];
     _photoview.contentMode = UIViewContentModeScaleAspectFill;
     _photoview.clipsToBounds = YES;
     UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(scaleBigger:)];

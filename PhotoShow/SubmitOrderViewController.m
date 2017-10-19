@@ -18,8 +18,10 @@
 #import "AddressViewController.h"
 #import "LTSinglePicker.h"
 #import "DocumentTableViewCell.h"
+#import "AlipayHandle.h"
+#import <AlipaySDK/AlipaySDK.h>
 
-@interface SubmitOrderViewController ()<UITableViewDelegate,UITableViewDataSource,SubmitOrderDelegate,SelectAddressDelegate>
+@interface SubmitOrderViewController ()<UITableViewDelegate,UITableViewDataSource,SubmitOrderDelegate,SelectAddressDelegate,alipayDelegate>
 
 @property (nonatomic,retain) UITableView * submitTableView;
 
@@ -47,7 +49,18 @@
 /** A4 B5 选择 */
 @property (nonatomic,retain) LTSinglePicker * singlePicker;
 
+
+@property (nonatomic,retain) NSString * order_id; //订单id
+@property (nonatomic,retain) NSString * order_no; //订单编号
+
+/** 支付方式  支付宝01 微信02 */
 @property (nonatomic,retain) NSString * payment;
+
+/** 制作份数 */
+@property (nonatomic,retain) NSString * pageNumber;
+
+/** 纸张类型 */
+@property (nonatomic,retain) NSString * pageType;
 
 @end
 
@@ -59,6 +72,9 @@
     [self initData];
     [self createTableview];
     
+    /** 默认制作份数 1 */
+    self.pageNumber = @"1";
+    self.pageType = @"A4";
     self.bottomView = [[SubmitOrderBottomView alloc]init];
     [self.view addSubview:self.bottomView];
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -93,9 +109,9 @@
     
     NSDictionary * dic = [[NSDictionary alloc]init];
     if (self.albumModel) {
-        dic = @{@"id":self.albumModel.albumId,@"type":@"01"};
+        dic = @{@"id":self.albumModel.albumId,@"type":self.albumModel.albumType};
     }else if (self.docModel){
-        dic = @{@"id":self.docModel.fileId,@"type":@"02"};
+        dic = @{@"id":self.docModel.fileId,@"type":@"10"};
     }
     [HTTPTool postWithPath:url_printAlbum params:dic success:^(id json) {
         if ([json[@"code"] integerValue] == 200 && [json[@"success"] intValue] == 1) {
@@ -169,7 +185,7 @@
     }else if (section == 1){
         return self.titleArr.count;
     }
-    return 2;
+    return 1;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -234,25 +250,13 @@
         numbercell.numberView.numberChanged = ^(NSString *number) {
             NSLog(@"%@",number);
             __strong typeof(weakself) strongself = weakself;
-            NSIndexPath * indexPath = nil;
-            NSIndexPath * numberIndexPath = nil;
-            if (self.albumModel) {
-                indexPath = [NSIndexPath indexPathForRow:4 inSection:1];
-                numberIndexPath = [NSIndexPath indexPathForRow:5 inSection:1];
-            }else{
-                indexPath = [NSIndexPath indexPathForRow:3 inSection:1];
-                numberIndexPath = [NSIndexPath indexPathForRow:4 inSection:1];
-            }
-            UserInfoDetailTableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath]; //纸张类型
-            NumberAddTableViewCell * numbercell = [tableView cellForRowAtIndexPath:numberIndexPath]; //数量
-            
-            if ([cell.userInfoDetailInfo.text isEqualToString:@"A4"]) {
-                strongself.bottomView.orderPriceLabel.text = [NSString stringWithFormat:@"合计  ￥%.2f",_A4SinglePrice * [numbercell.numberView.numberTextField.text intValue] + strongself.freight - strongself.credit];
-            }else{
-                strongself.bottomView.orderPriceLabel.text = [NSString stringWithFormat:@"合计  ￥%.2f",_B5SinglePrice * [numbercell.numberView.numberTextField.text intValue] + strongself.freight - strongself.credit];
-            }
 
+            strongself.pageNumber = number;
+            
+            [strongself caculate];
+           
         };
+        [self caculate];
         return numbercell;
     }else{
         cell.userInfoDetailInfo.text = self.contentArr[indexPath.row];
@@ -260,20 +264,34 @@
     return cell;
 }
 
+#pragma mark - 计算金额
+-(void)caculate{
+    if ([self.pageType isEqualToString:@"A4"]) {
+        //计算金额
+        NSLog(@"%f * %@ + %f - %ld = ",_A4SinglePrice,self.pageNumber,self.freight,(long)self.credit);
+        
+        self.bottomView.orderPriceLabel.text = [NSString stringWithFormat:@"合计  ￥%.2f",_A4SinglePrice * [self.pageNumber intValue] + self.freight - self.credit/100];
+    }else{            //计算金额
+        NSLog(@"%f * %@ + %f - %ld = ",_B5SinglePrice,self.pageNumber,self.freight,(long)self.credit);
+        
+        self.bottomView.orderPriceLabel.text = [NSString stringWithFormat:@"合计  ￥%.2f",_B5SinglePrice * [self.pageNumber intValue] + self.freight - self.credit/100];
+    }
+
+}
+
 /** 支付方式cell */
 -(UITableViewCell *)tableView:(UITableView *)tableView paymentCellForRowAtIndexPath:(NSIndexPath *)indexPath{
     PaymentTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"PaymentTableViewCell"];
-    if (indexPath.row == 0) {
-        cell.payment_title.text = @"微信支付";
-        cell.payment_icon.image = [UIImage imageNamed:@"icon_weixin"];
-        cell.payment_rightlogo.selected = YES;
-        self.payment = @"02";
-    }else{
-        cell.payment_title.text = @"支付宝支付";
-        cell.payment_icon.image = [UIImage imageNamed:@"icon_alipay"];
-        cell.payment_rightlogo.selected = NO;
-
-    }
+//    if (indexPath.row == 0) {
+//        cell.payment_title.text = @"微信支付";
+//        cell.payment_icon.image = [UIImage imageNamed:@"icon_weixin"];
+//        cell.payment_rightlogo.selected = YES;
+//        self.payment = @"02";
+//    }else{
+    cell.payment_title.text = @"支付宝支付";
+    cell.payment_icon.image = [UIImage imageNamed:@"icon_alipay"];
+    cell.payment_rightlogo.selected = YES;
+//    }
     return cell;
 }
 
@@ -288,35 +306,38 @@
         [self.navigationController pushViewController:vc animated:YES];
     }
     
-    if (self.albumModel && indexPath.section == 1 && indexPath.row == 4) {
+    if ((self.albumModel && indexPath.section == 1 && indexPath.row == 4) || (self.docModel && indexPath.section == 1 && indexPath.row == 3)) {
         [self.view addSubview:self.singlePicker];
         __weak typeof(_singlePicker) weaksinglePicker = _singlePicker;
+        WEAKSELF;
         _singlePicker.block = ^(NSDictionary *result) {
             UserInfoDetailTableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
             cell.userInfoDetailInfo.text = result[@"name"];
+            weakself.pageType = result[@"name"];
+            [weakself caculate];
             [weaksinglePicker removeFromSuperview];
         };
     }
 
-    if (indexPath.section == 2) {
-        PaymentTableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
-        cell.payment_rightlogo.selected = YES;
-
-        if (indexPath.row == 0) {
-            //微信支付
-            self.payment = @"02";
-            PaymentTableViewCell * cell = [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:2]];
-            cell.payment_rightlogo.selected = NO;
-
-        }else{
-//            支付宝支付
-            self.payment = @"01";
-            PaymentTableViewCell * cell = [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
-            cell.payment_rightlogo.selected = NO;
-
-        }
-        
-    }
+//    if (indexPath.section == 2) {
+//        PaymentTableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
+//        cell.payment_rightlogo.selected = YES;
+//
+//        if (indexPath.row == 0) {
+//            //微信支付
+//            self.payment = @"02";
+//            PaymentTableViewCell * cell = [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:2]];
+//            cell.payment_rightlogo.selected = NO;
+//
+//        }else{
+////            支付宝支付
+//            self.payment = @"01";
+//            PaymentTableViewCell * cell = [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
+//            cell.payment_rightlogo.selected = NO;
+//
+//        }
+//        
+//    }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -333,32 +354,26 @@
         return;
     }
     
-    //pageType  price
-    NSIndexPath * indexPath = nil;
-    NSIndexPath * numberIndexPath = nil;
-    if (self.albumModel) {
-        indexPath = [NSIndexPath indexPathForRow:4 inSection:1];
-        numberIndexPath = [NSIndexPath indexPathForRow:5 inSection:1];
-    }else{
-        indexPath = [NSIndexPath indexPathForRow:3 inSection:1];
-        numberIndexPath = [NSIndexPath indexPathForRow:4 inSection:1];
-    }
-    UserInfoDetailTableViewCell * cell = [self.submitTableView cellForRowAtIndexPath:indexPath]; //纸张类型
-    NumberAddTableViewCell * numbercell = [self.submitTableView cellForRowAtIndexPath:numberIndexPath]; //数量
-    
-    NSMutableDictionary * params = [[NSMutableDictionary alloc]initWithDictionary:@{@"addrssId":self.currentAddressModel.addressId,@"goodsType":self.albumModel?self.albumModel.albumType:@"10",@"goodsId":self.albumModel?self.albumModel.albumId:self.docModel.fileId,@"credit":@"0",@"payType":self.payment,@"quantity":numbercell.numberView.numberTextField.text}];
+    //支付宝支付
+    self.payment = @"01";
 
-    if ([cell.userInfoDetailInfo.text isEqualToString:@"A4"]) {
+    NSMutableDictionary * params = [[NSMutableDictionary alloc]initWithDictionary:@{@"addrssId":self.currentAddressModel.addressId,@"goodsType":self.albumModel?self.albumModel.albumType:@"10",@"goodsId":self.albumModel?self.albumModel.albumId:self.docModel.fileId,@"credit":@"0",@"payType":self.payment,@"quantity":self.pageNumber}];
+
+    if ([self.pageType isEqualToString:@"A4"]) {
         [params setObject:@"A4" forKey:@"pageType"];
-        [params setObject:[NSString stringWithFormat:@"%.2lf",_A4SinglePrice * [numbercell.numberView.numberTextField.text intValue] + self.freight - self.credit] forKey:@"price"];
+        [params setObject:[NSString stringWithFormat:@"%.2lf",_A4SinglePrice * [self.pageNumber intValue] + self.freight - self.credit/100] forKey:@"price"];
     }else{
         [params setObject:@"B5" forKey:@"pageType"];
-        [params setObject:[NSString stringWithFormat:@"%.2lf",_B5SinglePrice * [numbercell.numberView.numberTextField.text intValue] + self.freight - self.credit] forKey:@"price"];
+        [params setObject:[NSString stringWithFormat:@"%.2lf",_B5SinglePrice * [self.pageNumber intValue] + self.freight - self.credit/100] forKey:@"price"];
     }
     
     [HTTPTool postWithPath:url_createOrder params:params success:^(id json) {
         if ([json[@"code"] integerValue] == 200 && [json[@"success"] intValue] == 1) {
-            [HUDManager toastmessage:@"订单已提交" superView:self.view];
+            //[HUDManager toastmessage:@"订单已提交" superView:self.view];
+            self.order_id =json[@"data"][@"order_id"];
+            self.order_no =json[@"data"][@"pay_no"] ;
+
+            [self payWithOrderName:json[@"data"][@"goods_name"] orderNo:json[@"data"][@"pay_no"] orderAmount:json[@"data"][@"price"]];
         }else{
             [HUDManager toastmessage:json[@"msg"] superView:self.view];
         }
@@ -369,6 +384,34 @@
     NSLog(@"提交订单");
 }
 
+#pragma mark - 支付
+-(void)payWithOrderName:(NSString *)orderName orderNo:(NSString *)orderNo orderAmount:(NSString *)price{
+    [AlipayHandle shareAlipay].delegate = self;
+    [[AlipayHandle shareAlipay] AlipayPayWithOrderName:orderName orderNo:orderNo orderAmount:price];
+}
+
+-(void)payWith:(NSString *)orderString{
+    
+    [[AlipaySDK defaultService] payOrder:orderString fromScheme:APPSchemes callback:^(NSDictionary *resultDic) {
+        NSLog(@"submitOrder reslut = %@",resultDic);
+        if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]){
+            //支付成功
+            [HUDManager toastmessage:@"支付成功" superView:self.view];
+            [HTTPTool postWithPath:url_alipay_notify params:@{@"pay_no":self.order_no,@"order_id":self.order_id,@"success_order_id":resultDic[@"resultStatus"]} success:^(id json) {
+
+                [HUDManager toastmessage:@"支付结果上传成功" superView:self.view];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.navigationController popViewControllerAnimated:YES];
+                });
+            } failure:^(NSError *error) {
+                
+            } alertMsg:@"正在上传支付结果" successMsg:@"正在上传支付结果" failMsg:@"上传失败" showView:self.view];
+        }else{
+            //支付失败
+            [HUDManager toastmessage:@"支付失败" superView:self.view];
+        }
+    }];
+}
 
 -(NumberPickerView *)numberView{
     if (!_numberView) {

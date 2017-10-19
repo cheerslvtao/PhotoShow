@@ -56,4 +56,24 @@
 +(NSString *)getAlbumType:(NSString *)type;
 
 
+/**
+ 订单状态
+
+ @param states 0待支付 1已支付/带审核 2审核成功 3待收货/待发货 4已发货 5已收货 6审核失败 7取消
+ @return 返回state对应的文字
+ */
++(NSString *)orderStates:(NSString *)states;
+
+
+
+/**
+ 单按钮弹窗
+ 
+ @param title 标题
+ @param message 信息
+ @param sure 点击按钮 回调
+ */
++(void)alertWithTitle:(NSString *)title msg:(NSString *)message surebutton:(void (^)())sure;
+
+
 @end

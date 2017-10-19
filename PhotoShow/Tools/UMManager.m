@@ -36,7 +36,7 @@
     UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
     
     //创建网页内容对象
-    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:um.shareTitle descr:um.shareMsg thumImage:um.thumbURL];
+    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:um.shareTitle descr:um.shareMsg thumImage:[UIImage imageNamed:@"logo"]];
     //设置网页地址
     shareObject.webpageUrl = um.webpageUrl;
     //分享消息对象设置分享内容对象
@@ -60,5 +60,7 @@
         }
     }];
 }
+
+
 
 @end

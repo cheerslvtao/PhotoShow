@@ -15,8 +15,11 @@
 #import "LTDatePicker.h"
 #import <objc/runtime.h>
 #import "ImageManager.h"
+#import "TextViewTableViewCell.h"
 
-@interface EditingAlbumViewController ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+#import <CoreLocation/CoreLocation.h>
+
+@interface EditingAlbumViewController ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,CLLocationManagerDelegate>
 
 @property (nonatomic,retain) UITableView * editingTableView;
 
@@ -37,20 +40,26 @@
 /** 保存图片 提交的参数 */
 @property (nonatomic,retain) NSMutableDictionary * savePhotoParameters;
 
+@property (nonatomic,retain) CLLocationManager * locationManager;
+
+@property (nonatomic,retain) CLGeocoder * getcoder;
+
 @end
 
 @implementation EditingAlbumViewController
 
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     if (_type == AddAlbum){
         self.title = @"保存照片";
-        [self getWeather]; //如果是保存照片 直接获取天气情况
-    }else{
+        //        [self getWeather]; //如果是保存照片 直接获取天气情况
+        [self getLocation];
+    }else if(_type == EditingAlbum){
         self.title = @"编辑相册";
     }
-    
 
     [self setNavigationBarRightItem:@"保存" itemImg:[UIImage imageNamed:@"nav_save"] currentNavBar:self.navigationItem curentViewController:self];
     WEAKSELF;
@@ -62,6 +71,7 @@
         if (strongself.type == AddAlbum) {
             urlstring = url_uploadImage;
             params =  strongself.savePhotoParameters;
+
         }else{
             urlstring = url_updateAlbumsPhotoFile;
             [params setObject:strongself.savePhotoParameters[@"id"] forKey:@"album_photo_id"];
@@ -72,9 +82,9 @@
         }
         
         if (strongself.savePhotoParameters[@"photo_time"]) {
-            [params setObject:strongself.savePhotoParameters[@"photo_time"] forKey:@"photoTime"];
+            [params setObject:strongself.savePhotoParameters[@"photo_time"] forKey:@"photo_time"];
         }else{
-            [params setObject:[CommonTool getCurrentTime] forKey:@"photoTime"];
+            [params setObject:[CommonTool getCurrentTime] forKey:@"photo_time"];
         }
         
         [HTTPTool uploadImageWithPath:urlstring params:params thumbName:@"imageData" image:weakself.headerView.photoview.image success:^(id json) {
@@ -97,11 +107,62 @@
     
 }
 
+#pragma mark - 如果是添加照片 获取位置信息
+-(void)getLocation{
+    //如果已经授权
+    self.locationManager = [[CLLocationManager alloc]init];
+
+    if (![CLLocationManager locationServicesEnabled]) {
+        //如果没有开启位置信息 给一个默认的 lat=40.242266&lng=116.2278
+        [self getWeatherWithLocationLat:@"40.24226" lon:@"116.2278"];
+        return;
+    }
+    //如果没有授权则当使用定位的时候请求用户授权
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
+        [_locationManager requestWhenInUseAuthorization];
+    }else if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedWhenInUse)
+    {
+        //设置代理
+        _locationManager.delegate = self;
+        //设置精度
+        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        //定位频率，也就是每隔多少米定位一次
+        _locationManager.distanceFilter = 100.0;//每隔10米定位一次
+        //启动跟踪定位
+        [_locationManager startUpdatingLocation];
+    }
+    
+}
+
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations{
+    CLLocation * location = [locations firstObject];//取出第一个位置
+    //获得位置坐标
+    CLLocationCoordinate2D coord = location.coordinate;
+    
+    //获取天气情况
+    [self getWeatherWithLocationLat:[NSString stringWithFormat:@"%lf",coord.latitude] lon:[NSString stringWithFormat:@"%lf",coord.longitude]];
+    
+    _getcoder = [[CLGeocoder alloc]init];
+    [_getcoder reverseGeocodeLocation:location completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        CLPlacemark * placemark = [placemarks firstObject];
+        NSLog(@"逆向地理编码：详细信息~~~%@",placemark.addressDictionary);
+        NSLog(@"%@",[NSString stringWithFormat:@"%@%@%@%@",placemark.addressDictionary[@"State"],placemark.addressDictionary[@"City"],placemark.addressDictionary[@"SubLocality"],placemark.addressDictionary[@"Name"]]);
+        [_savePhotoParameters setObject:[NSString stringWithFormat:@"%@%@%@%@",placemark.addressDictionary[@"State"],placemark.addressDictionary[@"City"],placemark.addressDictionary[@"SubLocality"],placemark.addressDictionary[@"Name"]] forKey:@"address"];
+        [self.editingTableView reloadData];
+    }];
+    
+    //如果不使用定位服务，使用完成之后及时关闭定位
+    [manager stopUpdatingLocation];
+    
+}
+
+
+
 #pragma mark - 获取天气
--(void)getWeather{
+-(void)getWeatherWithLocationLat:(NSString *)lat lon:(NSString *)lon {
     //请求天气信息 成功后刷新列表
     WEAKSELF;
-    [HTTPTool getWeatherSuccess:^(id json) {
+    [HTTPTool getWeatherWithLocationLat:lat lon:lon Success:^(id json) {
         __strong typeof(weakself) strongself = weakself;
         strongself.weatherInfo = json;
         NSLog(@"天气 -----  %@",json);
@@ -119,6 +180,7 @@
     self.editingTableView.delegate = self;
     self.editingTableView.dataSource = self;
     [self.editingTableView registerNib:[UINib nibWithNibName:@"EditingTableViewCell" bundle:nil] forCellReuseIdentifier:@"EditingTableViewCell"];
+    [self.editingTableView registerNib:[UINib nibWithNibName:@"TextViewTableViewCell" bundle:nil] forCellReuseIdentifier:@"TextViewTableViewCell"];
     self.editingTableView.estimatedRowHeight = 44;
     self.editingTableView.rowHeight = UITableViewAutomaticDimension;
     self.editingTableView.separatorInset = UIEdgeInsetsMake(0, -15, 0, 0);
@@ -129,6 +191,9 @@
     if (self.type == AddAlbum) {
         self.headerView.photoview.image = [UIImage imageWithData:self.takePhotoImageData];
         [self.headerView.selectPhotoAgainBtn removeFromSuperview];
+    }else if (self.type == diray){
+        [self.headerView.selectPhotoAgainBtn removeFromSuperview];
+        [self.headerView.cameraAgainBtn setTitle:@"拍摄照片" forState:UIControlStateNormal];
     }
     
     self.editingTableView.tableHeaderView = self.headerView;
@@ -140,6 +205,9 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row == 2){
+        return 130;
+    }
     return UITableViewAutomaticDimension;
 }
 
@@ -150,8 +218,8 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     EditingTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"EditingTableViewCell"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    if (indexPath.row == 0 ) {
-        cell.editingcontent.placeholder = @"输入拍照地点";
+    if (indexPath.row == 0) {
+        cell.editingcontent.placeholder = @"输入地点";
         cell.editingcontent.delegate = self;
         if (self.weatherInfo.count>0 && self.type == AddAlbum) {
             [cell.rightlogoImgView setImageWithURL:[NSURL URLWithString:self.weatherInfo[@"showapi_res_body"][@"now"][@"weather_pic"]] placeholderImage:[UIImage imageNamed:@"photo_tianqi"]];
@@ -160,8 +228,8 @@
             if (![_savePhotoParameters[@"address"] isEqual:[NSNull null]]) {
                 cell.editingcontent.text = _savePhotoParameters[@"address"];
             }
-            if (![_savePhotoParameters[@"weatherUrl"] isEqual:[NSNull null]]) {
-                [cell.rightlogoImgView setImageWithURL:[NSURL URLWithString:self.savePhotoParameters[@"weatherUrl"]] placeholderImage:[UIImage imageNamed:@"photo_tianqi"]];
+            if (_savePhotoParameters[@"weatherUrl"] && ![_savePhotoParameters[@"weatherUrl"] isEqual:[NSNull null]]) {
+                [cell.rightlogoImgView sd_setImageWithURL:[NSURL URLWithString:self.savePhotoParameters[@"weatherUrl"]] placeholderImage:[UIImage imageNamed:@"photo_tianqi"]];
             }
         }
 
@@ -179,20 +247,13 @@
             cell.editingcontent.text = [CommonTool getCurrentTime];
         }
     }else if (indexPath.row == 2){
-        [cell.rightlogoImgView removeFromSuperview];
-        [cell.leftlogoImgView removeFromSuperview];
-        [cell.editingcontent removeFromSuperview];
-        [cell.contentView addSubview:self.descriptionTextView];
-        [self.descriptionTextView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.top.offset(15);
-            make.right.bottom.offset(-15);
-            make.height.mas_equalTo(100);
-        }];
+        
+        TextViewTableViewCell * textCell = [tableView dequeueReusableCellWithIdentifier:@"TextViewTableViewCell"];
+        textCell.contentTextView.delegate = self;
         if (self.savePhotoParameters.count > 0 && ![_savePhotoParameters[@"mood"] isEqual:[NSNull null]]){
-            self.descriptionTextView.text = _savePhotoParameters[@"mood"];
-        }else{
-            self.descriptionTextView.text = @"";
+            textCell.contentTextView.text = _savePhotoParameters[@"mood"];
         }
+        return textCell;
     }
     return cell;
 }
@@ -271,6 +332,9 @@
             weakself.savePhotoParameters = [[NSMutableDictionary alloc]initWithDictionary:modelDic];
             [weakself.headerView.photoview sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",baseAPI,modelDic[@"photoUrl"]]] placeholderImage:[UIImage imageNamed:image_placeholder]];
             [weakself.editingTableView reloadData];
+        };
+        _photoCV.isSubmitBlock = ^{
+            [weakself.navigationController popViewControllerAnimated:YES];
         };
     }
     return _photoCV;
